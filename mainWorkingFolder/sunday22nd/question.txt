@@ -1,0 +1,18 @@
+const users = [
+  { id: 1, name: "Alice", age: 25, isActive: true, hobbies: ["reading", "hiking"] },
+  { id: 2, name: "Bob", age: 30, isActive: false, hobbies: ["gaming", "cooking"] },
+  { id: 3, name: "Charlie", age: 28, isActive: true, hobbies: ["cycling", "music"] },
+  { id: 4, name: "David", age: 22, isActive: false, hobbies: ["travel", "reading"] },
+  { id: 5, name: "Eva", age: 35, isActive: true, hobbies: ["yoga", "cooking"] }
+];
+1. map() → Return names of all users
+2. filter() → Get only active users
+3. find() → Find the user named "Charlie"
+4. reduce() → Calculate the total age of all users
+5. some() → Check if there is any user below age 24
+6. every() → Check if all users have the 'cooking' hobby
+7. forEach() → Print each user's name and age
+8. includes() → Check if "Eva" has "yoga" as a hobby
+9. sort() → Sort users by age in descending order
+10. flatMap() or map + flat() → Create one array of all hobbies
+Q: Using a for loop, count how many users have more than 1 hobby.
