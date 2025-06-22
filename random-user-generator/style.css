@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    display: inline-block;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  }
+  
+  #user-photo {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background: #3498db;
+    color: white;
+    border: none;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  
