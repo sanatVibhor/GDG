@@ -4,7 +4,7 @@ console.log("JS Fundamentals");
 //2.variable and data types
 //js gives us 3 ways to declare variables
 
-var name="virat kohli"; //function-scoped
+var name="virat kohlio"; //function-scoped
 let age=25;    //Block-scoped 
 const PI= 3.14; //Block-scoped constant
 
