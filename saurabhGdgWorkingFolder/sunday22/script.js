@@ -8,7 +8,7 @@ const users = [
 // 1. map() → Return names of all users
 const userNames = users.map(user => user.name);
 console.log(userNames);
-// 2. filter() → Get only active users
+// 2. filter() → Get only aactive users
 const activeUsers = users.filter(user => user.isActive);
 console.log(activeUsers);
 // 3. find() → Find the user named "Charlie"
