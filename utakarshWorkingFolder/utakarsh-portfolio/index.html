@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Utakarsh - Dev Portfolio</title>
+  </head>
+  <body>
+    <script type="text/javascript" src="js/script.js"></script>
+    <header class="site_header">
+      <div class="wrapper_inner">
+        <nav class="site_header_nav">
+          <ul role="list" class="flex flex_center">
+            <li><a href="#hero">HOME</a></li>
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#work">WORK</a></li>
+            <li>
+              <a href="javascript:void(0)" onclick="openPopup()">CONTACT</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section id="hero">
+        <div class="wrapper">
+          <div class="wrapper_inner">
+            <div class="text_center hero_content">
+              <h1 class="h2">Utakarsh Baranwal</h1>
+              <p class="h5">WEB DEVELOPER && MACHINE LEARNING ENGINEER</p>
+            </div>
+          </div>
+          <ul role="list" class="flex flex_between hero_social">
+            <address>Jamshedpur, India</address>
+            <ul role="list" class="flex">
+              <li>Find me online</li>
+              <li>
+                <a href="https://github.com/iamspruce" target="_blank">
+                  <img
+                    src="/assets/icon-github.jpg"
+                    alt="GitHub"
+                    width="24"
+                    height="24"
+                  />
+                </a>
+              </li>
+            </ul>
+          </ul>
+        </div>
+      </section>
+    </main>
+    <section id="about">
+      <div class="wrapper">
+        <div class="text_center">
+          <h2>
+            I am a web developer and Machine Learing Engineer. I like to play
+            with datasets and train models to solve problems.
+          </h2>
+        </div>
+        <div class="wrapper_inner">
+          <div class="about_content flex flex_around">
+            <figure class="about_figure text_center">
+              <img
+                width="300px"
+                height="300px"
+                src="/assets/user.jpg"
+                alt="Developer"
+                class="about_img"
+              />
+              <figcaption class="about_caption">Utakarsh</figcaption>
+            </figure>
+            <p class="h5">
+              Born in Jamshedpur, I've spent 4+ years building and experimenting
+              with machine learning and Python. I help companies and creators
+              bring their ideas to life through hands-on development.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="work">
+      <div class="wrapper_inner">
+        <div class="text_center">
+          <h4 class="h5">MY PROJECTS!!!!</h4>
+          <ul role="list" class="work_logos flex flex_center">
+            <li class="projects">
+              <h2>Skillink</h2>
+              <p>
+                Resume Classification and course recommendation using Gemini API
+              </p>
+            </li>
+            <li class="projects">
+              <h2>Employ-Prediction</h2>
+              <p>
+                Model predicts wheather an Employee is likely to leave or stay
+              </p>
+            </li>
+            <li class="projects">
+              <h2>To-do</h2>
+              <p>Schedule and check your daily routine.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section id="Tech-skills">
+      <div class="wrapper">
+        <h4>Technologies I Know</h4>
+        <div class="tech-logos">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original-wordmark.svg"
+          />
+
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"
+          />
+
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original-wordmark.svg"
+          />
+
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg"
+          />
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg"
+          />
+
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original-wordmark.svg"
+          />
+
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original.svg"
+          />
+
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+          />
+
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg"
+          />
+
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg"
+          />
+
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matplotlib/matplotlib-original-wordmark.svg"
+          />
+
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original-wordmark.svg"
+          />
+
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg"
+          />
+        </div>
+      </div>
+    </section>
+    <div id="popup" class="popup">
+      <div class="popup-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <form>
+          <h4>
+            <i>New Contact</i>
+            <hr />
+          </h4>
+          <label for="name">Name:</label><br />
+          <input type="text" id="name" name="name" required /><br /><br />
+          <label for="email">Email:</label><br />
+          <input type="email" id="email" name="email" required /><br /><br />
+          <label for="linkedin">LinkedIn Profile URL:</label><br />
+          <input
+            type="url"
+            id="linkedin"
+            name="linkedin"
+            placeholder="https://www.linkedin.com/in/your-profile"
+            required
+          /><br /><br />
+          <div id="btn"><button onclick="closePopup()">Register</button></div>
+        </form>
+      </div>
+    </div>
+    <footer>
+      <p>&copy; 2025 Utakarsh. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
