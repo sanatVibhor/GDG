@@ -1,0 +1,378 @@
+/**
+ * CORE CONFIG
+ * This powers everything from utility class generation to breakpoints
+ * to enabling/disabling pre-built components/utilities.
+ */
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+/*smooth scrooling*/
+html{
+  scroll-behavior: smooth;
+}
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+  padding: 0;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  letter-spacing: -0.01em;
+}
+
+/* All elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+}
+
+:focus {
+  outline: 2px dashed #00ff19;
+  outline-offset: 0.25rem;
+}
+
+main:focus {
+  outline: none;
+}
+
+/* @link https://utopia.fyi/type/calculator?c=320,18,1.2,1240,20,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+
+:root {
+  --step--2: clamp(0.7813rem, 0.7747rem + 0.0326vw, 0.8rem);
+  --step--1: clamp(0.9375rem, 0.9158rem + 0.1087vw, 1rem);
+  --step-0: clamp(1.125rem, 1.0815rem + 0.2174vw, 1.25rem);
+  --step-1: clamp(1.35rem, 1.2761rem + 0.3696vw, 1.5625rem);
+  --step-2: clamp(1.62rem, 1.5041rem + 0.5793vw, 1.9531rem);
+  --step-3: clamp(1.944rem, 1.771rem + 0.8651vw, 2.4414rem);
+  --step-4: clamp(2.3328rem, 2.0827rem + 1.2504vw, 3.0518rem);
+  --step-5: clamp(2.7994rem, 2.4462rem + 1.7658vw, 3.8147rem);
+}
+
+/* @link https://utopia.fyi/space/calculator?c=320,18,1.2,1240,20,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+
+:root {
+  --space-3xs: clamp(0.3125rem, 0.3125rem + 0vw, 0.3125rem);
+  --space-2xs: clamp(0.5625rem, 0.5408rem + 0.1087vw, 0.625rem);
+  --space-xs: clamp(0.875rem, 0.8533rem + 0.1087vw, 0.9375rem);
+  --space-s: clamp(1.125rem, 1.0815rem + 0.2174vw, 1.25rem);
+  --space-m: clamp(1.6875rem, 1.6223rem + 0.3261vw, 1.875rem);
+  --space-l: clamp(2.25rem, 2.163rem + 0.4348vw, 2.5rem);
+  --space-xl: clamp(3.375rem, 3.2446rem + 0.6522vw, 3.75rem);
+  --space-2xl: clamp(4.5rem, 4.3261rem + 0.8696vw, 5rem);
+  --space-3xl: clamp(6.75rem, 6.4891rem + 1.3043vw, 7.5rem);
+}
+
+h1,
+.h1 {
+  font-size: var(--step-5);
+}
+
+h2,
+.h2 {
+  font-size: var(--step-4);
+}
+
+h3,
+.h3 {
+  font-size: var(--step-3);
+}
+
+h4,
+.h4 {
+  font-size: var(--step-2);
+}
+
+h5,
+.h5 {
+  font-size: var(--step-1);
+}
+
+/* define some constants */
+.flex {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+}
+@media (max-width: 468px) {  /*responsive*/
+  .flex {
+    flex-wrap: wrap;
+  }
+}
+.flex_center {
+  justify-content: center;
+}
+.flex_around {
+  justify-content: space-around;
+}
+.flex_between {
+  justify-content: space-between;
+}
+@media (max-width: 468px) {
+  .flex_around {
+    justify-content: center;
+  }
+  .flex_between {
+    justify-content: center;
+  }
+}
+.text_center {
+  text-align: center;
+}
+.text_right {
+  text-align: right;
+}
+/* define spacing */
+.padding-top-3xs {
+  padding: var(--space-3xs);
+}
+
+/* create the wrappers */
+.wrapper {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.wrapper_inner {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Style the header */
+.site_header {
+  padding: var(--space-s) 0;
+  background: linear-gradient(rgba(26, 26, 64, 0.9), rgba(26, 26, 64, 0.9));
+  position: fixed;
+  width:100%;
+  top:0;
+  z-index: 1000;
+}
+
+.site_header_nav ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+/* Hero section styling */
+.hero_content {
+  padding: var(--space-3xl) 0;
+}
+
+.hero_content h1 {
+  margin-bottom: var(--space-s);
+}
+
+.hero_social {
+  padding-top: var(--space-3xl);
+}
+
+/* General styling for the hero section */
+section {
+  padding: var(--space-2xl) var(--space-l);
+}
+
+section#hero {
+  background: linear-gradient(rgba(26, 26, 64, 0.3), rgba(26, 26, 64, 0.3)),
+    url("/assets/portfolio_background.jpg");
+  padding-bottom: 4px;
+  background-size: cover;
+  background-position: top;
+  background-attachment: scroll;
+  color: #fafafa;
+  --color-accent: #8a2be2;
+}
+
+/* About section */
+.about_content {
+  padding: var(--space-xl) 0;
+  transform: skewX(-10deg);
+}
+
+@media (max-width: 468px) {
+  .about_content {
+    transform: skewX(0deg);
+  }
+}
+
+.about_figure {
+  padding: var(--space-xl) 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ccc;
+  display: inline-block;
+  padding: 5px;
+}
+
+.about_img {
+  width: 650px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.about_caption {
+  padding: var(--space-3xs) 0;
+}
+
+section#about {
+  background-color: #ffffff;
+  color: #333;
+  --color-accent: #ffd700;
+}
+
+/* work section */
+.work_logos {
+  margin-top: var(--space-xl);
+}
+
+section#work {
+  background: linear-gradient(rgba(73, 73, 183, 0.3), rgba(26, 26, 64, 0.3)),
+        url("https://www.exascaleproject.org/wp-content/uploads/2019/11/PathForward-scaled.jpg");
+  background-size: cover;
+  color: #0c0c0c;
+  --color-accent: #2e8b57;
+}
+
+.projects{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.projects > h2{
+  color:#ebedf1;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #222;
+  color: white;
+}
+ 
+
+.popup {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.popup-content {
+  background:linear-gradient(rgba(157, 157, 233, 0.9), rgba(26, 26, 64, 0.9)),
+          url("https://purelifi.com/wp-content/uploads/2019/12/AdobeStock_298681782.jpeg");
+  background-size: cover;
+  margin: 10% auto;
+  padding: 20px;
+  width: 340px;
+  height: auto;
+  border-radius: 10px;
+  text-align: left;
+  box-shadow: 0 0 10px #000;
+}
+
+.close {
+  color: rgb(240, 239, 232);
+  float: right;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+#btn{
+  display:flex;
+  justify-content: center;
+}
+
+form label{
+  display:block;
+  margin-top: 15px;
+  font-weight: bold;
+  color:#ccc;
+}
+
+form input{
+  width:300px;
+  border-radius: 5px;
+  height: 30px;
+}
+
+form button{
+  display:flex;
+  justify-content: center;
+  width:120px;
+  color:white;
+  background-color:#007bff;
+  border-radius: 5px;
+}
+
+.tech-logos {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.tech-logos img {
+  width: 60px;
+  height: 60px;
+  transition: transform 0.2s;
+}
+
+.wrapper h4{
+  font-family:Arial, Helvetica, sans-serif ;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.tech-logos img:hover {
+  transform: scale(1.1);
+}
