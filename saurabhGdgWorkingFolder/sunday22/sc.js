@@ -45,20 +45,67 @@ console.log("The number of employee having sales above avg:",count);
 
 // Question 5: Calculate total sales by department
 console.log("5. What are the total sales by department?");
-const department=salesData.flatMap(salesData => salesData.department);
-console.log(department);
+const totalSalesByDepartment = salesData.reduce((acc, emp) => {
+    acc[emp.department] = (acc[emp.department] || 0) + emp.sales;
+    return acc;
+}, {});
+console.log(totalSalesByDepartment);
 // Question 6: Find the top 3 performers by sales
 console.log("6. Who are the top 3 performers by sales amount?");
-const sortedUsers = [...salesData].sort((a, b) => b.sales - a.sales);
-console.log(sortedUsers);
+const top3Performers = [...salesData].sort((a, b) => b.sales - a.sales).slice(0, 3);
+console.log(top3Performers);
+
 // Question 7: Calculate average years of experience by region
 console.log("7. What is the average years of experience by region?");
+const experienceByRegion = {};
+salesData.forEach(emp => {
+    if (!experienceByRegion[emp.region]) {
+        experienceByRegion[emp.region] = { total: 0, count: 0 };
+    }
+    experienceByRegion[emp.region].total += emp.yearsExperience;
+    experienceByRegion[emp.region].count++;
+});
+
+const avgExperienceByRegion = {};
+for (let region in experienceByRegion) {
+    const { total, count } = experienceByRegion[region];
+    avgExperienceByRegion[region] = total / count;
+}
+console.log(avgExperienceByRegion);
 
 // Question 8: Find employees with commission rate above 5%
 console.log("8. Which employees have a commission rate above 5%?");
+const highCommissionEmployees = salesData.filter(emp => emp.commission > 0.05);
+console.log(highCommissionEmployees);
 
 // Question 9: Calculate the performance ratio (sales per year of experience)
 console.log("9. What is each employee's performance ratio (sales per year of experience)?");
+const performanceRatios = salesData.map(emp => ({
+    name: emp.name,
+    ratio: (emp.sales / emp.yearsExperience).toFixed(2)
+}));
+console.log(performanceRatios);
 
 // Question 10: Find the department with highest average commission rate
 console.log("10. Which department has the highest average commission rate?");
+const commissionByDept = {};
+salesData.forEach(emp => {
+    if (!commissionByDept[emp.department]) {
+        commissionByDept[emp.department] = { total: 0, count: 0 };
+    }
+    commissionByDept[emp.department].total += emp.commission;
+    commissionByDept[emp.department].count++;
+});
+
+let highestAvgDept = "";
+let highestAvgRate = 0;
+
+for (let dept in commissionByDept) {
+    const { total, count } = commissionByDept[dept];
+    const avgRate = total / count;
+    if (avgRate > highestAvgRate) {
+        highestAvgRate = avgRate;
+        highestAvgDept = dept;
+    }
+}
+console.log(`Highest avg commission: ${highestAvgDept} (${(highestAvgRate * 100).toFixed(2)}%)`);
