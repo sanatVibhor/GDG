@@ -220,7 +220,7 @@ section {
 
 section#hero {
   background: linear-gradient(rgba(26, 26, 64, 0.3), rgba(26, 26, 64, 0.3)),
-    url("/assets/portfolio_background.jpg");
+    url("../assets/portfolio_background.jpg");
   padding-bottom: 4px;
   background-size: cover;
   background-position: top;
