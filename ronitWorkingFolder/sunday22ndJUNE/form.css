@@ -1,67 +1,67 @@
-* {
-  box-sizing: border-box;
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f3f3f3;
+  background-image: url('https://fulltimestore.in/cdn/shop/files/argentina_50_years.jpg?v=1744369796&width=1000');
+  color: #333;
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-body {
-  background: #f0f2f5;
   display: flex;
-  height: 100vh;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 }
 
-.form-container {
-  background: #fff;
-  padding: 2rem 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
+.form-container{
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 15px 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  width: 100%; max-width: 400px;
+  
 }
 
-h2 {
+.button-container{
+  display: flex;
+   gap: 10px;
+}
+
+h2{
   text-align: center;
-  margin-bottom: 1.5rem;
-  color: #333;
+  margin-bottom: 20px;
+  
 }
 
-form label {
+form label{
   display: block;
-  margin: 0.75rem 0 0.25rem;
-  color: #555;
-  font-size: 0.95rem;
+  margin-top: 15px;
+  margin-top: 15px;
 }
 
-form input {
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="file"]
+form input[type="address"]{
   width: 100%;
-  padding: 0.6rem;
+  padding: 10px;
+  margin-top: 5px;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-  transition: border-color 0.3s;
+  border-radius: 4px;
 }
 
-form input:focus {
-  border-color: #007BFF;
-  outline: none;
-}
-
-button {
+form button {
+  margin-top: 20px;
   width: 100%;
-  padding: 0.75rem;
-  background: #007BFF;
-  border: none;
-  border-radius: 8px;
+  background-color: #007bff;
   color: white;
-  font-size: 1rem;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
   cursor: pointer;
-  transition: background 0.3s;
 }
 
-button:hover {
-  background: #0056b3;
+form button:hover {
+  background-color: #0056b3;
 }
