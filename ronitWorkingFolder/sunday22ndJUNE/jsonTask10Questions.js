@@ -15,7 +15,7 @@ const activeUsers = users.filter((user) => user.isActive);
 console.log("active users:", activeUsers);
 
 //3. find() → Find the user named "Charlie"
-const chalieFind = users.find(((users)) => users.name === "Charlie");
+const chalieFind = users.find(user => user.name === "Charlie");
 console.log("Charlie user;", chalieFind);
 
 //4.reduce() → Calculate the total age of all users
