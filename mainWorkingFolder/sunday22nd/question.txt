@@ -5,6 +5,8 @@ const users = [
   { id: 4, name: "David", age: 22, isActive: false, hobbies: ["travel", "reading"] },
   { id: 5, name: "Eva", age: 35, isActive: true, hobbies: ["yoga", "cooking"] }
 ];
+
+
 1. map() → Return names of all users
 2. filter() → Get only active users
 3. find() → Find the user named "Charlie"
