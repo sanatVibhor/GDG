@@ -17,7 +17,7 @@ const App = () => {
   );
 };
 
-export default App;
+// export default App;
 // import React from 'react'
 // import ReactExplained from '../components/ReactExplained'
 // const App = () => {
@@ -79,5 +79,5 @@ export default App;
 //   )
 // }
 
-// export default App
+export default App
 
