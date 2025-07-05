@@ -1,17 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import JSX from '../components/JSX'
+import React, { useState } from 'react';
+import LoginPage from '../components/LoginPage'
+import Todo from '../components/Todo';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    // Add actual auth logic here later
+    setIsLoggedIn(true);
+  };
 
   return (
-    <>
-     <JSX/>
-    </>
-  )
-}
+    <div>
+      {isLoggedIn ? <Todo /> : <LoginPage onLogin={handleLogin} />}
+    </div>
+  );
+};
 
-export default App
+export default App;
