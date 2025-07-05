@@ -1,14 +1,17 @@
-body {
+
+
+    /* background: linear-gradient(0deg, rgba(189, 28, 143, 1) 22%, rgba(148, 187, 233, 1) 100%); */
+    /* background: linear-gradient(30deg, rgba(221, 114, 186, 0.3) 22%, rgba(148, 187, 233, 0.6) 100%); */
+    /* body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    /* background: linear-gradient(0deg, rgba(189, 28, 143, 1) 22%, rgba(148, 187, 233, 1) 100%); */
-    background: linear-gradient(0deg, rgba(221, 114, 186, 1) 22%, rgba(148, 187, 233, 1) 100%);
+
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: sans-serif;
-  }
+  } */
   
   .loginpage {
     width: 100%;
@@ -68,17 +71,43 @@ body {
   }
   
   .login-card-form button {
+    width: 100%;
     padding: 12px;
-    font-size: 16px;
-    background-color: #bd1c8f;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    background-color: #5f64ff;
     color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: 0.3s ease;
   }
+
+  img{
+    width: 20px;
+  }
+  .w-100
+  {
+    width: 100%;
+  } 
+  .w-50
+  {
+    width: 50%;
+  } 
+  .flex
+  {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    flex-direction: row;
+  } 
+  .gap-1{
+    gap: 5px;
+  }
+  
   .login-card-form button:hover {
-    background-color: #a20e77;
+    background-color: #463dff;
   }
   
   .login-card-form a {
