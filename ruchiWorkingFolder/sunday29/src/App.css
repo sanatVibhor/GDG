@@ -1,14 +1,15 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f4f8;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
+    width: 100%;
+    color: rgba(78, 88, 132, 0.614);
   }
-  
+/*   
   .form-container {
     background-color: white;
     padding: 25px 30px;
@@ -61,4 +62,4 @@ body {
     display: flex;
     gap: 5px;
     justify-content: center;
-  }
+  } */
