@@ -1,23 +1,23 @@
-// import React, { useState } from 'react';
-// import LoginPage from '../components/LoginPage'
-// import Todo from '../components/Todo';
+import React, { useState } from 'react';
+import LoginPage from '../components/LoginPage'
+import Todo from '../components/Todo';
 
-// const App = () => {
-//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-//   const handleLogin = () => {
-//     // Add actual auth logic here later
-//     setIsLoggedIn(true);
-//   };
+  const handleLogin = () => {
+    // Add actual auth logic here later
+    setIsLoggedIn(true);
+  };
 
-//   return (
-//     <div>
-//       {isLoggedIn ? <Todo /> : <LoginPage onLogin={handleLogin} />}
-//     </div>
-//   );
-// };
+  return (
+    <div>
+      {isLoggedIn ? <Todo /> : <LoginPage onLogin={handleLogin} />}
+    </div>
+  );
+};
 
-// export default App;
+export default App;
 // import React from 'react'
 // import ReactExplained from '../components/ReactExplained'
 // const App = () => {
@@ -69,15 +69,15 @@
 
 // export default App
 
-import React from 'react'
-import Event from '../components/Event'
-const App = () => {
-  return (
-    <div>
-      <Event/>
-    </div>
-  )
-}
+// import React from 'react'
+// import Event from '../components/Event'
+// const App = () => {
+//   return (
+//     <div>
+//       <Event/>
+//     </div>
+//   )
+// }
 
-export default App
+// export default App
 
