@@ -57,9 +57,17 @@ body {
   form button:hover {
     background-color: #0056b3;
   }
-  
-  .btn {
-    display: flex;
-    gap: 5px;
-    justify-content: center;
-  } */
+   */
+  button {
+    margin: 10px 0px;
+    border-style: none;
+    border : 1px solid #a4a4cb;
+    padding: 10px;
+    background-color: rgb(232, 218, 237);
+    border-radius: 20px;
+    
+  }
+
+  button:hover{
+    background-color: rgb(197, 165, 246);
+  }
