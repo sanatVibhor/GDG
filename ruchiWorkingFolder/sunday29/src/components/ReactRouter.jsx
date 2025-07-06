@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Home = () => {
+const ReactRouter = () => {
   return (
     <div>
-      <p>Home page</p>
+      
     </div>
   )
 }
 
-export default Home
+export default ReactRouter
