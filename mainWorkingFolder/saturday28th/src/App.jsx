@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import LoginPage from '../components/LoginPage'
-import Todo from '../components/Todo';
+// import React, { useState } from 'react';
+// import LoginPage from '../components/LoginPage'
+// import Todo from '../components/Todo';
 
-const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+// const App = () => {
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleLogin = () => {
-    // Add actual auth logic here later
-    setIsLoggedIn(true);
-  };
+//   const handleLogin = () => {
+//     // Add actual auth logic here later
+//     setIsLoggedIn(true);
+//   };
 
-  return (
-    <div>
-      {isLoggedIn ? <Todo /> : <LoginPage onLogin={handleLogin} />}
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       {isLoggedIn ? <Todo /> : <LoginPage onLogin={handleLogin} />}
+//     </div>
+//   );
+// };
 
-export default App;
+// export default App;
 // import React from 'react'
 // import ReactExplained from '../components/ReactExplained'
 // const App = () => {
@@ -83,3 +83,67 @@ export default App;
 
 
 
+
+
+// import React from 'react'
+// import Hooks from '../components/Hooks';
+// const App = () => {
+//   return (
+//     <div>
+//       <Hooks/>
+//     </div>
+//   )
+// }
+
+// export default App
+
+
+
+// import React from 'react'
+// import UseEffect from '../components/UseEffect'
+// const App = () => {
+//   return (
+//     <div>
+//       <UseEffect/>
+//     </div>
+//   )
+// }
+
+// export default App
+
+
+// import React from 'react'
+// import UseMemo from '../components/UseMemo'
+// const App = () => {
+//   return (
+//     <div>
+//       <UseMemo/>
+//     </div>
+//   )
+// }
+
+// export default App
+
+// import React from 'react'
+// import UseCallback from '../components/UseCallback'
+// const App = () => {
+//   return (
+//     <div>
+//       <UseCallback/>
+//     </div>
+//   )
+// }
+
+// export default App
+
+import React from 'react'
+import ReactRouter from '../components/ReactRouter'
+const App = () => {
+  return (
+    <div>
+      <ReactRouter/>
+    </div>
+  )
+}
+
+export default App
