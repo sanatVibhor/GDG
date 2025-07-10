@@ -16,7 +16,7 @@ const ReactExplained = () => {
 export default ReactExplained
 
 /*
-React: Virtual DOM
+React: Virtual DOM    
 
 DOM -> document object model.
 user request -> html document <p>  <h1> etc from the server.

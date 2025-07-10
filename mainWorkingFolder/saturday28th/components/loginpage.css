@@ -77,7 +77,6 @@ body {
     cursor: pointer;
     transition: 0.3s ease;
   }
-  
   .login-card-form button:hover {
     background-color: #a20e77;
   }
