@@ -79,7 +79,7 @@ export default App;
 //   )
 // }
 
-export default App
+//export default App
 
 
 
@@ -134,14 +134,14 @@ export default App
 
 // export default App
 
-import React from 'react'
-import ReactRouter from '../components/ReactRouter'
-const App = () => {
-  return (
-    <div>
-      <ReactRouter/>
-    </div>
-  )
-}
+// import React from 'react'
+// import ReactRouter from '../components/ReactRouter'
+// const App = () => {
+//   return (
+//     <div>
+//       <ReactRouter/>
+//     </div>
+//   )
+// }
 
-export default App
+// export default App
