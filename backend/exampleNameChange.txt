@@ -1,0 +1,2 @@
+writing using node js after read sync
+New line added
