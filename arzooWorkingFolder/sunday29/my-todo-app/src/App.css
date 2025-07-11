@@ -1,0 +1,95 @@
+/* src/App.css */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f1f5f9;
+}
+
+.container {
+  width: 90%;
+  max-width: 360px;     
+  margin: 40px auto;    
+  background: white;
+  padding: 20px;        
+  border-radius: 10px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+
+.expense-box {
+  background-color: #e0f0ff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.expense-box h3 {
+  margin-top: 0;
+}
+
+.expense-box input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.expense-input {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.expense-input input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.expense-input button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.todo-form input,
+.todo-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.add-todo {
+  background-color: #007bff;
+  color: white;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #f1f5f9;
+  display: flex;
+  justify-content: center;    /* Center left-right */
+  align-items: flex-start;    /* Keep top-aligned */
+}
+
+h1 {
+  font-size: 1.8rem;
+}
