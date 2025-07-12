@@ -143,6 +143,10 @@
 //     </div>
 //   )
 // }
+<<<<<<< HEAD
+
+// export default App
+=======
 
 // export default App
 
@@ -171,3 +175,4 @@ function App() {
 export default App;
 
 
+>>>>>>> 4752c2b6316254f4356b4a66d2937641a8e2f1b5
