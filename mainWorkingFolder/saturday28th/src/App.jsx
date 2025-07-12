@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import LoginPage from '../components/LoginPage'
-import Todo from '../components/Todo';
+// import React, { useState } from 'react';
+// import LoginPage from '../components/LoginPage'
+// import Todo from '../components/Todo';
 
-const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+// const App = () => {
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleLogin = () => {
-    // Add actual auth logic here later
-    setIsLoggedIn(true);
-  };
+//   const handleLogin = () => {
+//     // Add actual auth logic here later
+//     setIsLoggedIn(true);
+//   };
 
-  return (
-    <div>
-      {isLoggedIn ? <Todo /> : <LoginPage onLogin={handleLogin} />}
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       {isLoggedIn ? <Todo /> : <LoginPage onLogin={handleLogin} />}
+//     </div>
+//   );
+// };
 
-export default App;
+// export default App;
 // import React from 'react'
 // import ReactExplained from '../components/ReactExplained'
 // const App = () => {
@@ -145,3 +145,29 @@ export default App;
 // }
 
 // export default App
+
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import StudentDashboard from '../components/studentDashBoard';
+
+const NotFound = () => (
+  <div style={{ padding: '20px', color: 'red' }}>
+    <h2>404 - Page Not Found</h2>
+    <p>The page you’re looking for doesn’t exist.</p>
+  </div>
+);
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<StudentDashboard />} />
+        <Route path="*" element={<NotFound />} /> {/* fallback for invalid routes */}
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+
+
