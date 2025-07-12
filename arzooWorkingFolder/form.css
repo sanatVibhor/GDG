@@ -1,67 +1,45 @@
-/* Global Styles */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f3f3f3;
-  background-image: url('https://fulltimestore.in/cdn/shop/files/argentina_50_years.jpg?v=1744369796&width=1000');
-  color: #333;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  background-color: #f2f2f2;
 }
 
-.form-container{
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 15px 30px;
+.form-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background: white;
   border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
-  width: 100%; max-width: 400px;
-  
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.button-container{
-  display: flex;
-   gap: 10px;
-}
-
-h2{
-  text-align: center;
-  margin-bottom: 20px;
-  
-}
-
-form label{
+form label {
   display: block;
   margin-top: 15px;
-  margin-top: 15px;
+  font-weight: bold;
 }
 
-form input[type="text"],
-form input[type="email"],
-form input[type="password"],
-form input[type="file"]
-form input[type="address"]{
+form input {
   width: 100%;
-  padding: 10px;
+  padding: 8px;
   margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  box-sizing: border-box;
 }
 
-form button {
+.btn {
   margin-top: 20px;
-  width: 100%;
-  background-color: #007bff;
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
+  display: flex;
+  gap: 10px;
 }
 
-form button:hover {
-  background-color: #0056b3;
+button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #007BFF;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button[type="button"] {
+  background-color: #6c757d;
 }
