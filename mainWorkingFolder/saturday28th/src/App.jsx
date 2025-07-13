@@ -147,6 +147,9 @@
 // export default App
 
 
+// export default App
+
+
 //below is for new student addition flow
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -171,6 +174,21 @@ function App() {
 }
 
 export default App;
+
+
+//student form
+// import React from 'react';
+// import StudentForm from '../components/StudentForm'
+
+// function App() {
+//   return (
+//     <div>
+//       <StudentForm/>
+//     </div>
+//   );
+// }
+
+// export default App;
 
 
 //student form

@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100%;
+    /* background: linear-gradient(0deg, rgba(189, 28, 143, 1) 22%, rgba(148, 187, 233, 1) 100%); */
+    background: linear-gradient(0deg, rgb(28, 121, 98) 22%, rgb(15, 67, 126) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+  }
+  
+  .loginpage {
+  
+     width: 100vw;
+  height: 100vh;
+  background-color: #efd4f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    
+  }
+  
+  .login-page-card {
+    background-color: rgb(255, 255, 255);
+    width: 800px;
+    height: 400px;
+    display: flex;
+    box-shadow: 0 8px 20px rgba(172, 85, 197, 0.2);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  
+  /* Left text section */
+  .login-card-text {
+    flex: 1;
+    background-color: #a370ca;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .login-card-heading h1 {
+    font-size: 8px;
+    margin: 0;
+    font-size: 32px;
+    color: #000000;
+  }
+  
+  .login-card-paragraph p {
+    margin-top: 16px;
+    font-size: 18px;
+    color: #000000;
+  }
+  
+  /* Right form section */
+  .login-card-form {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+  }
+  
+  .login-card-form input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+
+  .btn-primary {
+  padding: 12px;
+  font-size: 16px;
+  text-align: center;
+  background-color: #bd1c8f;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  transition: 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #5d254d;
+}
+
+.btn-secondary {
+  padding: 12px;
+  font-size: 16px;
+   display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #fcfcfc;
+  color: #201d1d;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  transition: 0.3s ease;
+  margin-top: 10px;
+}
+
+.google-logo {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  object-fit: contain;
+}
+
+
+.btn-secondary:hover {
+  background-color: #b0a0a8;
+}
+
+  
+  .login-card-form a {
+    color: #65255e;
+    text-decoration: none;
+  }
+  
+  .login-card-form a:hover {
+    text-decoration: underline;
+  }
