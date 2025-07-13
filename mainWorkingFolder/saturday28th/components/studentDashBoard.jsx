@@ -42,7 +42,7 @@ const StudentDashboard = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h1>📚 Student Dashboard</h1>
+      <h1>Student Dashboard</h1>
 
       <h2>Student List</h2>
       <table style={{ borderCollapse: 'collapse', width: '60%' }}>
