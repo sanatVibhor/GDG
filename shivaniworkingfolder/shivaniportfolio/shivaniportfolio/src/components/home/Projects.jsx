@@ -11,7 +11,7 @@ function Projects() {
     },
     title: {
       fontSize: '2.2rem',
-      color: '#0d47a1',
+      color: '#6a1b9a',
       textAlign: 'center',
       marginBottom: '30px',
     },

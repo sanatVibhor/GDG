@@ -23,9 +23,9 @@ function Header() {
   return (
     <nav style={styles.container}>
       <Link to="/" style={styles.link}>Home</Link>
-      <Link to="/about" style={styles.link}>About</Link>
-      <Link to="/projects" style={styles.link}>Projects</Link>
-      <Link to="/contact" style={styles.link}>Contact</Link>
+      <Link to="/About" style={styles.link}>About</Link>
+      <Link to="/Projects" style={styles.link}>Projects</Link>
+      <Link to="/Contact" style={styles.link}>Contact</Link>
     </nav>
   );
 }

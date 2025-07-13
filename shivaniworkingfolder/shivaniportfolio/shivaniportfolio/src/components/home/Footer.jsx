@@ -1,17 +1,22 @@
+//src/components/home/Footer.jsx
+
 import React from 'react';
 
 function Footer() {
   const styles = {
-    footer: {
-      padding: '24px 16px',
-      textAlign: 'center',
-      fontFamily: 'sans-serif',
-      fontSize: '0.9rem',
-      color: '#7b1fa2',
-      borderTop: '1px solid #e1bee7',
-      background: '#fafafa',
-      marginTop: '60px',
-    },
+    footer:{
+  width: '100vw',                  // ✅ Full stretch
+  padding: '24px clamp(16px, 5vw, 32px)', // Responsive side spacing
+  textAlign: 'center',
+  fontFamily: 'sans-serif',
+  fontSize: '0.9rem',
+  color: '#7b1fa2',
+  borderTop: '1px solid #e1bee7',
+  background: '#fafafa',
+  marginTop: 'auto',              // Helps stick to bottom if needed
+  boxSizing: 'border-box',
+},
+  
     link: {
       margin: '0 10px',
       color: '#6a1b9a',
