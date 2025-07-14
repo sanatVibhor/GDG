@@ -31,10 +31,26 @@ fs.readFile('GDG1.txt','utf8', (err,data)=>{
 });
 
 
-// .rename
+fs.rename('GDG.txt', 'GDG_renamed.txt', (err) => {
+    if (err) {
+        throw err;
+    }
+    console.log('File has been renamed.');
+}
 
 
-// .unlink
+.unlink('GDG_renamed.txt', (err) => {
+    if (err) throw err; 
+    console.log('GDG_renamed.txt was deleted');
+}
 
 
-// .mkdir
+
+.mkdir('newFolder', (err) => {
+    if (err) throw err;
+    console.log('Directory created');
+}   
+);
+console.log("fs executed");
+    
+
