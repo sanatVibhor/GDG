@@ -1,0 +1,950 @@
+import React, { useState, useEffect, useRef } from 'react';
+import * as XLSX from 'xlsx';
+import '../AttendanceApp/dropdowns.css'; // Ensure this path is correct
+
+// Create a reusable Loader component
+const Loader = () => {
+    return (
+        <div className="loader-container">
+            <div className="loader-spinner"></div>
+            <p className="loader-text">Loading...</p>
+        </div>
+    );
+};
+
+// Frontend Service for submitting attendance (no change)
+export const submitAttendance = async (attendanceData) => {
+    try {
+        const response = await fetch('https://attendace-system-backend.vercel.app/api/attendance', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(attendanceData)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to submit attendance');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error submitting attendance:', error);
+        throw error;
+    }
+};
+
+// New service for adding student to database
+const addStudentToDatabase = async (studentName, locationCode) => {
+    try {
+        const response = await fetch('https://attendace-system-backend.vercel.app/api/students', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: studentName,
+                locationCode: locationCode
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to add student to database');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error adding student to database:', error);
+        throw error;
+    }
+};
+
+const Dropdowns = () => {
+    const [selectedDate, setSelectedDate] = useState('');
+    const [selectedLocation, setSelectedLocation] = useState('');
+    const [locationObject, setLocationObject] = useState(null);
+    const [locationOptions, setLocationOptions] = useState([]);
+    const [students, setStudents] = useState([]);
+    const [selectedStudentIds, setSelectedStudentIds] = useState([]);
+    const [selectedStudentMap, setSelectedStudentMap] = useState({});
+    const [volunteers, setVolunteers] = useState([]);
+    const [volunteerName, setVolunteerName] = useState('');
+    const [newStudentName, setNewStudentName] = useState('');
+    const [additionalStudents, setAdditionalStudents] = useState([]);
+    const [existingData, setExistingData] = useState(null);
+    const [attendanceHistory, setAttendanceHistory] = useState({});
+
+    // Custom Dropdown State for Location
+    const [isLocationDropdownOpen, setIsLocationDropdownOpen] = useState(false);
+    const locationDropdownRef = useRef(null);
+
+    // Loading state management
+    const [isLoading, setIsLoading] = useState(false);
+    const [loadingLocations, setLoadingLocations] = useState(false);
+    const [loadingStudents, setLoadingStudents] = useState(false);
+    const [submittingData, setSubmittingData] = useState(false);
+    const [addingStudent, setAddingStudent] = useState(false); // New loading state for adding student
+
+    useEffect(() => {
+        const savedAttendance = localStorage.getItem('attendanceData');
+        if (savedAttendance) {
+            setAttendanceHistory(JSON.parse(savedAttendance));
+        }
+        fetchLocations();
+    }, []);
+
+    // Effect to close location dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (locationDropdownRef.current && !locationDropdownRef.current.contains(event.target)) {
+                setIsLocationDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    const fetchLocations = async () => {
+        setLoadingLocations(true);
+        setIsLoading(true);
+        try {
+            const response = await fetch('https://attendace-system-backend.vercel.app/api/locations/all', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch locations');
+            }
+
+            const data = await response.json();
+            const locations = data.map(location => ({
+                _id: location._id,
+                code: location.code,
+                name: location.name,
+                address: location.address || ''
+            }));
+            setLocationOptions(locations);
+        } catch (error) {
+            console.error('Error fetching locations:', error);
+            setLocationOptions([
+                { _id: 'mock_id_1', code: 'BIT_MESRA', name: 'BIT Mesra', address: 'Mesra' },
+                { _id: 'mock_id_2', code: 'DD_LOC1', name: 'DD Location 1', address: 'DD Area 1' },
+                { _id: 'mock_id_3', code: 'DD_LOC2', name: 'DD Location 2', address: 'DD Area 2' },
+                { _id: 'mock_id_4', code: 'DD_LOC3', name: 'DD Location 3', address: 'DD Area 3' },
+                { _id: 'mock_id_5', code: 'JOJO_NAGAR', name: 'Jojo Nagar', address: 'Jojo Area' }
+            ]);
+            console.warn('Using fallback location data due to API error');
+        } finally {
+            setLoadingLocations(false);
+            setIsLoading(false);
+        }
+    };
+
+    const fetchStudentsByLocation = async (locationCode) => {
+        setLoadingStudents(true);
+        setIsLoading(true);
+        try {
+            const response = await fetch(`https://attendace-system-backend.vercel.app/api/students/locations/${locationCode}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch students for ${locationCode}`);
+            }
+
+            const data = await response.json();
+            setStudents(data);
+            setSelectedStudentIds([]);
+            setSelectedStudentMap({});
+        } catch (error) {
+            console.error(`Error fetching students for ${locationCode}:`, error);
+            const mockData = generateMockStudentData(locationCode);
+            setStudents(mockData);
+        } finally {
+            setLoadingStudents(false);
+            setIsLoading(false);
+        }
+    };
+
+    const generateMockStudentData = (locationCode) => {
+        const locationObj = locationOptions.find(loc => loc.code === locationCode) ||
+            { _id: 'mock_location_id', code: locationCode, name: locationCode };
+
+        const mockDataMap = {
+            'BIT_MESRA': [
+                { _id: 'BIT001', name: 'Rahul Kumar', location: locationObj, isActive: true },
+                { _id: 'BIT002', name: 'Priya Sharma', location: locationObj, isActive: true },
+                { _id: 'BIT003', name: 'Amit Singh', location: locationObj, isActive: true },
+            ],
+            'DD_LOC1': [
+                { _id: 'DD101', name: 'Ankit Patel', location: locationObj, isActive: true },
+                { _id: 'DD102', name: 'Meera Joshi', location: locationObj, isActive: true },
+            ],
+            'DD_LOC2': [
+                { _id: 'DD201', name: 'Vikram Malhotra', location: locationObj, isActive: true },
+                { _id: 'DD202', name: 'Neha Gupta', location: locationObj, isActive: true },
+            ],
+            'DD_LOC3': [
+                { _id: 'DD301', name: 'Sanjay Roy', location: locationObj, isActive: true },
+                { _id: 'DD302', name: 'Ritu Das', location: locationObj, isActive: true },
+            ],
+            'JOJO_NAGAR': [
+                { _id: 'JJ001', name: 'Raj Verma', location: locationObj, isActive: true },
+                { _id: 'JJ002', name: 'Sunita Mishra', location: locationObj, isActive: true },
+            ]
+        };
+        return mockDataMap[locationCode] || [];
+    };
+
+    const toggleLocationDropdown = () => {
+        if (!anyLoading) {
+            setIsLocationDropdownOpen(prev => !prev);
+        }
+    };
+
+    const handleLocationChange = (locationCode) => {
+        setSelectedLocation(locationCode);
+        const locationObj = locationOptions.find(loc => loc.code === locationCode);
+        setLocationObject(locationObj || null);
+
+        if (locationCode) {
+            fetchStudentsByLocation(locationCode);
+        } else {
+            setStudents([]);
+        }
+
+        if (attendanceHistory[locationCode]) {
+            setExistingData(attendanceHistory[locationCode]);
+        } else {
+            setExistingData(null);
+        }
+        setIsLocationDropdownOpen(false);
+    };
+
+    const handleDateChange = (event) => {
+        const newDate = event.target.value;
+        setSelectedDate(newDate);
+
+        // If we have data for this date, pre-select the students
+        if (existingData && existingData[newDate]) {
+            const storedData = existingData[newDate];
+
+            if (storedData.presentStudentIds) {
+                setSelectedStudentIds(storedData.presentStudentIds);
+                const newMap = {};
+                if (students.length > 0) {
+                    storedData.presentStudentIds.forEach(id => {
+                        const student = students.find(s => s._id === id);
+                        if (student) {
+                            newMap[id] = student;
+                        }
+                    });
+                }
+                setSelectedStudentMap(newMap);
+            } else if (storedData.presentStudents) {
+                const studentIdsByName = {};
+                const selectedIds = [];
+                storedData.presentStudents.forEach(name => {
+                    const matchedStudent = students.find(s => s.name === name);
+                    if (matchedStudent) {
+                        studentIdsByName[matchedStudent._id] = matchedStudent;
+                        selectedIds.push(matchedStudent._id);
+                    }
+                });
+                setSelectedStudentIds(selectedIds);
+                setSelectedStudentMap(studentIdsByName);
+            }
+            setVolunteers(storedData.volunteers || []);
+            if (storedData.additionalStudents) {
+                setAdditionalStudents(storedData.additionalStudents);
+            } else {
+                setAdditionalStudents([]);
+            }
+        } else {
+            setSelectedStudentIds([]);
+            setSelectedStudentMap({});
+            setVolunteers([]);
+            setAdditionalStudents([]);
+        }
+    };
+
+    const handleStudentSelection = (event, student) => {
+        const studentId = student._id;
+        const isChecked = event.target.checked;
+
+        if (isChecked) {
+            setSelectedStudentIds(prev => [...prev, studentId]);
+            setSelectedStudentMap(prev => ({ ...prev, [studentId]: student }));
+        } else {
+            setSelectedStudentIds(prev => prev.filter(id => id !== studentId));
+            setSelectedStudentMap(prev => {
+                const newMap = { ...prev };
+                delete newMap[studentId];
+                return newMap;
+            });
+        }
+    };
+
+    const handleVolunteerChange = (event) => {
+        setVolunteerName(event.target.value);
+    };
+
+    const addVolunteer = () => {
+        if (volunteerName && !volunteers.includes(volunteerName)) {
+            setVolunteers([...volunteers, volunteerName]);
+            setVolunteerName('');
+        }
+    };
+
+    const handleNewStudentChange = (event) => {
+        setNewStudentName(event.target.value);
+    };
+
+    // const addNewStudent = async () => {
+    //     // Validate inputs
+    //     if (!newStudentName.trim()) {
+    //         alert('Please enter a student name');
+    //         return;
+    //     }
+
+    //     if (!selectedLocation) {
+    //         alert('Please select a location first');
+    //         return;
+    //     }
+
+    //     // Check if student already exists in current students list
+    //     if (students.some(student => student.name.toLowerCase() === newStudentName.trim().toLowerCase())) {
+    //         alert('A student with this name already exists in the current location');
+    //         return;
+    //     }
+
+    //     // Check if student already exists in additional students
+    //     if (additionalStudents.some(student => student.name.toLowerCase() === newStudentName.trim().toLowerCase())) {
+    //         alert('This student has already been added to the additional students list');
+    //         return;
+    //     }
+
+    //     setAddingStudent(true);
+    //     setIsLoading(true);
+
+    //     try {
+    //         // Add student to database
+    //         const addedStudent = await addStudentToDatabase(newStudentName.trim(), selectedLocation);
+            
+    //         // Create student object for local state
+    //         const newStudent = {
+    //             _id: addedStudent._id,
+    //             name: addedStudent.name,
+    //             location: addedStudent.location || locationObject,
+    //             isNew: true // Mark as newly added for UI purposes
+    //         };
+
+    //         // Add to additional students list (for current session display)
+    //         const updatedAdditionalStudents = [...additionalStudents, newStudent];
+    //         setAdditionalStudents(updatedAdditionalStudents);
+            
+    //         // Auto-select the new student
+    //         setSelectedStudentIds(prev => [...prev, newStudent._id]);
+    //         setSelectedStudentMap(prev => ({ ...prev, [newStudent._id]: newStudent }));
+            
+    //         // Clear input
+    //         setNewStudentName('');
+            
+    //         // Show success message
+    //         alert(`Student "${addedStudent.name}" has been successfully added to the database and selected for attendance.`);
+            
+    //         // Optionally refresh the students list to include the new student
+    //         // Note: This will make the student appear in both regular and additional lists
+    //         // You might want to refresh the students list after submission instead
+            
+    //     } catch (error) {
+    //         console.error('Error adding new student:', error);
+    //         alert(`Failed to add student to database: ${error.message}. Please try again.`);
+    //     } finally {
+    //         setAddingStudent(false);
+    //         setIsLoading(false);
+    //     }
+    // };
+    const addNewStudent = () => {
+        if (!newStudentName.trim()) {
+            alert('Please enter a student name');
+            return;
+        }
+    
+        if (!selectedLocation) {
+            alert('Please select a location first');
+            return;
+        }
+    
+        const duplicateInList = students.some(s => s.name.toLowerCase() === newStudentName.trim().toLowerCase());
+        const duplicateInNew = additionalStudents.some(s => s.name.toLowerCase() === newStudentName.trim().toLowerCase());
+    
+        if (duplicateInList || duplicateInNew) {
+            alert('Student already exists in the list');
+            return;
+        }
+    
+        const newStudent = {
+            _id: `temp_${Date.now()}`, // Temporary ID, will be replaced after actual creation
+            name: newStudentName.trim(),
+            location: locationObject,
+            isNew: true
+        };
+    
+        setAdditionalStudents(prev => [...prev, newStudent]);
+        setSelectedStudentIds(prev => [...prev, newStudent._id]);
+        setSelectedStudentMap(prev => ({ ...prev, [newStudent._id]: newStudent }));
+        setNewStudentName('');
+    };
+    
+    // const handleSubmit = async () => {
+    //     if (!selectedDate || !selectedLocation) {
+    //         alert('Please select both date and location');
+    //         return;
+    //     }
+
+    //     const allStudentIds = students.map(student => student._id);
+    //     const absentStudentIds = allStudentIds.filter(id => !selectedStudentIds.includes(id));
+
+    //     const formPayload = {
+    //         date: selectedDate,
+    //         location: locationObject?._id || '',
+    //         present: selectedStudentIds,
+    //         volunteer: volunteers,
+    //         absent: absentStudentIds,
+    //         additionalStudents: additionalStudents.map(student => ({
+    //             _id: student._id,
+    //             name: student.name,
+    //             isNew: student.isNew
+    //         }))
+    //     };
+
+    //     console.log('Form submission payload:', formPayload);
+    //     setSubmittingData(true);
+    //     setIsLoading(true);
+
+    //     try {
+    //         const response = await fetch('https://attendace-system-backend.vercel.app/api/attendance', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Accept': 'application/json',
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(formPayload)
+    //         });
+
+    //         if (!response.ok) {
+    //             const errorData = await response.json();
+    //             throw new Error(errorData.message || 'Failed to submit attendance');
+    //         }
+
+    //         const updatedHistory = { ...attendanceHistory };
+    //         if (!updatedHistory[selectedLocation]) {
+    //             updatedHistory[selectedLocation] = {};
+    //         }
+
+    //         updatedHistory[selectedLocation][selectedDate] = {
+    //             presentStudentIds: selectedStudentIds,
+    //             absentStudentIds: absentStudentIds,
+    //             students: selectedStudentMap,
+    //             volunteers: volunteers,
+    //             additionalStudents: additionalStudents
+    //         };
+
+    //         setAttendanceHistory(updatedHistory);
+    //         localStorage.setItem('attendanceData', JSON.stringify(updatedHistory));
+
+    //         await generateExcelFile(updatedHistory);
+
+    //         alert('Attendance Submitted to MongoDB and Master Excel file updated!');
+            
+    //         // Refresh students list to include newly added students in the main list
+    //         if (additionalStudents.length > 0) {
+    //             await fetchStudentsByLocation(selectedLocation);
+    //             setAdditionalStudents([]); // Clear additional students as they're now in main list
+    //         }
+            
+    //     } catch (error) {
+    //         console.error('Error submitting attendance:', error);
+    //         alert(`There was an error submitting attendance: ${error.message}. Please try again.`);
+    //     } finally {
+    //         setSubmittingData(false);
+    //         setIsLoading(false);
+    //     }
+    // };
+    const handleSubmit = async () => {
+        if (!selectedDate || !selectedLocation) {
+            alert('Please select both date and location');
+            return;
+        }
+    
+        setSubmittingData(true);
+        setIsLoading(true);
+    
+        try {
+            // 1. Create actual students in DB from additionalStudents
+            const createdStudents = await Promise.all(
+                additionalStudents.map(async (student) => {
+                    const result = await addStudentToDatabase(student.name, selectedLocation);
+                    return {
+                        ...result,
+                        isNew: true
+                    };
+                })
+            );
+    
+            // 2. Merge new student IDs into selectedStudentIds and selectedStudentMap
+            const finalStudentIds = [...selectedStudentIds.filter(id => !id.startsWith('temp_')), ...createdStudents.map(s => s._id)];
+            const finalStudentMap = {
+                ...Object.fromEntries(
+                    Object.entries(selectedStudentMap).filter(([key]) => !key.startsWith('temp_'))
+                ),
+                ...Object.fromEntries(createdStudents.map(s => [s._id, s]))
+            };
+    
+            // 3. Build payload
+            const allStudentIds = students.map(student => student._id).concat(createdStudents.map(s => s._id));
+            const absentStudentIds = allStudentIds.filter(id => !finalStudentIds.includes(id));
+    
+            const formPayload = {
+                date: selectedDate,
+                location: locationObject?._id || '',
+                present: finalStudentIds,
+                volunteer: volunteers,
+                absent: absentStudentIds,
+                additionalStudents: createdStudents.map(s => ({
+                    _id: s._id,
+                    name: s.name,
+                    isNew: true
+                }))
+            };
+    
+            // 4. Submit attendance
+            const response = await fetch('https://attendace-system-backend.vercel.app/api/attendance', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formPayload)
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to submit attendance');
+            }
+    
+            // 5. Save and update state
+            const updatedHistory = { ...attendanceHistory };
+            if (!updatedHistory[selectedLocation]) {
+                updatedHistory[selectedLocation] = {};
+            }
+            updatedHistory[selectedLocation][selectedDate] = {
+                presentStudentIds: finalStudentIds,
+                absentStudentIds: absentStudentIds,
+                students: finalStudentMap,
+                volunteers: volunteers,
+                additionalStudents: createdStudents
+            };
+    
+            setAttendanceHistory(updatedHistory);
+            localStorage.setItem('attendanceData', JSON.stringify(updatedHistory));
+    
+            await generateExcelFile(updatedHistory);
+    
+            alert('Attendance Submitted and Excel File Updated!');
+    
+            // Refresh full student list from backend
+            await fetchStudentsByLocation(selectedLocation);
+            setAdditionalStudents([]);
+            setSelectedStudentIds([]);
+            setSelectedStudentMap({});
+    
+        } catch (error) {
+            console.error('Error during submission:', error);
+            alert(`Failed to submit: ${error.message}`);
+        } finally {
+            setSubmittingData(false);
+            setIsLoading(false);
+        }
+    };
+    
+    const generateExcelFile = async (history) => {
+        const workbook = XLSX.utils.book_new();
+
+        for (const locationCode of Object.keys(history)) {
+            const locationData = history[locationCode];
+            const allDates = Object.keys(locationData).sort();
+
+            if (allDates.length === 0) continue;
+
+            let allStudents = [];
+            let allAdditionalStudents = [];
+
+            allDates.forEach(date => {
+                if (locationData[date].additionalStudents) {
+                    allAdditionalStudents = [
+                        ...allAdditionalStudents,
+                        ...locationData[date].additionalStudents.filter(newStudent =>
+                            !allAdditionalStudents.some(s => s._id === newStudent._id)
+                        )
+                    ];
+                }
+
+                if (locationData[date].students) {
+                    Object.values(locationData[date].students).forEach(student => {
+                        if (!allStudents.some(s => s._id === student._id)) {
+                            allStudents.push(student);
+                        }
+                    });
+                }
+            });
+
+            if (allStudents.length === 0) {
+                try {
+                    const response = await fetch(`https://attendace-system-backend.vercel.app/api/students/locations/${locationCode}`, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        }
+                    });
+
+                    if (response.ok) {
+                        allStudents = await response.json();
+                    } else {
+                        throw new Error(`Failed to fetch students for ${locationCode}`);
+                    }
+                } catch (error) {
+                    console.error(`Error fetching students for ${locationCode} during Excel generation:`, error);
+                    console.warn(`Using mock data for ${locationCode}`);
+                    allStudents = generateMockStudentData(locationCode);
+                }
+            }
+
+            allStudents = [...allStudents, ...allAdditionalStudents];
+
+            const headers = ['ID', 'Name', 'Type', ...allDates];
+
+            const rows = allStudents.map(student => {
+                const row = [
+                    student._id,
+                    student.name,
+                    student.isNew ? 'New' : 'Regular'
+                ];
+
+                allDates.forEach(date => {
+                    const dateData = locationData[date];
+                    let isPresent = 'A';
+
+                    if (dateData.presentStudentIds && dateData.presentStudentIds.includes(student._id)) {
+                        isPresent = 'P';
+                    }
+                    else if (dateData.presentStudents && dateData.presentStudents.includes(student.name)) {
+                        isPresent = 'P';
+                    }
+
+                    row.push(isPresent);
+                });
+                return row;
+            });
+
+            const volunteerRows = [
+                [],
+                ['Volunteers']
+            ];
+
+            const allVolunteers = new Set();
+            allDates.forEach(date => {
+                if (locationData[date].volunteers) {
+                    locationData[date].volunteers.forEach(volunteer => allVolunteers.add(volunteer));
+                }
+            });
+
+            Array.from(allVolunteers).forEach(volunteer => {
+                const row = [
+                    '',
+                    volunteer,
+                    'Volunteer'
+                ];
+                allDates.forEach(date => {
+                    const dateData = locationData[date];
+                    const isPresent = dateData.volunteers.includes(volunteer) ? 'P' : 'A';
+                    row.push(isPresent);
+                });
+                volunteerRows.push(row);
+            });
+
+            const worksheetData = [
+                headers,
+                ...rows,
+                ...volunteerRows
+            ];
+
+            const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+            const locationName = locationOptions.find(loc => loc.code === locationCode)?.name || locationCode;
+            XLSX.utils.book_append_sheet(workbook, worksheet, locationName);
+        }
+
+        const summaryData = [
+            ['Location', 'Date', 'Students Present', 'New Students', 'Volunteers Present']
+        ];
+
+        Object.keys(history).forEach(locationCode => {
+            const locationData = history[locationCode];
+            const locationName = locationOptions.find(loc => loc.code === locationCode)?.name || locationCode;
+
+            Object.keys(locationData).forEach(date => {
+                const dateData = locationData[date];
+                const newStudentsCount = dateData.additionalStudents ? dateData.additionalStudents.length : 0;
+                const presentStudentsCount = dateData.presentStudentIds
+                    ? dateData.presentStudentIds.length
+                    : (dateData.presentStudents ? dateData.presentStudents.length : 0);
+
+                summaryData.push([
+                    locationName,
+                    date,
+                    presentStudentsCount,
+                    newStudentsCount,
+                    dateData.volunteers.length
+                ]);
+            });
+        });
+
+        const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
+        XLSX.utils.book_append_sheet(workbook, summarySheet, 'Summary');
+        XLSX.writeFile(workbook, `Attendance_Master_Record.xlsx`);
+    };
+
+    const clearAllData = () => {
+        if (window.confirm('Are you sure you want to clear all attendance data? This cannot be undone.')) {
+            localStorage.removeItem('attendanceData');
+            setAttendanceHistory({});
+            setExistingData(null);
+            setSelectedStudentIds([]);
+            setSelectedStudentMap({});
+            setVolunteers([]);
+            setAdditionalStudents([]);
+            alert('All attendance data has been cleared.');
+        }
+    };
+
+    // Determine if any loading operation is active
+    const anyLoading = isLoading || loadingLocations || loadingStudents || submittingData || addingStudent;
+
+    // Get the display name for the selected location in the custom dropdown trigger
+    const selectedLocationDisplayName = locationOptions.find(
+        (loc) => loc.code === selectedLocation
+    )?.name || '--Select Location--';
+
+    // Get the display name for the selected date
+    const selectedDateDisplayName = selectedDate || '--Select Date--';
+
+    return (
+        <div className="attendance-form">
+            {/* Global page loader overlay */}
+            {anyLoading && <Loader />}
+
+            {/* --- CUSTOM DATE INPUT (visually styled as a dropdown) --- */}
+            <div>
+                <label htmlFor="date">Select Date:</label>
+                <div className="custom-dropdown-container"> {/* Reusing the container class */}
+                    <input
+                        type="date"
+                        id="date"
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        disabled={anyLoading}
+                        // Add a class to apply dropdown-like styling to the native input
+                        className="custom-date-input-trigger"
+                        aria-label="Select Date" // For accessibility
+                    />
+                    {/* The native date picker will pop up when the input is focused/clicked */}
+                </div>
+            </div>
+            {/* <p>Selected Date: {selectedDate}</p> Removed as the input itself displays the date */}
+            {/* --- END CUSTOM DATE INPUT --- */}
+
+            {/* --- CUSTOM LOCATION DROPDOWN --- */}
+            <div>
+                <label htmlFor="location">Select Location:</label>
+                <div
+                    className="custom-dropdown-container"
+                    ref={locationDropdownRef}
+                >
+                    <button
+                        type="button"
+                        className={`custom-dropdown-trigger ${isLocationDropdownOpen ? 'is-open' : ''}`}
+                        onClick={toggleLocationDropdown}
+                        disabled={anyLoading}
+                        aria-haspopup="listbox"
+                        aria-expanded={isLocationDropdownOpen}
+                    >
+                        {selectedLocationDisplayName}
+                        <span className="dropdown-arrow"></span>
+                    </button>
+
+                    {isLocationDropdownOpen && (
+                        <ul className="custom-dropdown-options" role="listbox" tabIndex="-1">
+                            <li
+                                className="custom-dropdown-option"
+                                role="option"
+                                onClick={() => handleLocationChange('')}
+                                tabIndex="0"
+                            >
+                                --Select Location--
+                            </li>
+                            {locationOptions.map((location) => (
+                                <li
+                                    key={location.code}
+                                    className={`custom-dropdown-option ${
+                                        selectedLocation === location.code ? 'is-selected' : ''
+                                    }`}
+                                    role="option"
+                                    onClick={() => handleLocationChange(location.code)}
+                                    tabIndex="0"
+                                >
+                                    {location.name}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+                {loadingLocations && <span className="loading-text">Loading locations...</span>}
+            </div>
+            {/* --- END CUSTOM LOCATION DROPDOWN --- */}
+
+            {selectedLocation && selectedDate && existingData && existingData[selectedDate] && (
+                <div className="existing-data-notice">
+                    <p className="notice">Attendance data already exists for this date. Editing will update the existing record.</p>
+                </div>
+            )}
+
+            {students.length > 0 && (
+                <div className="student-list">
+                    <h3>Student List for {locationOptions.find(loc => loc.code === selectedLocation)?.name || selectedLocation}</h3>
+                    {loadingStudents ? (
+                        <div className="loading-text">Loading students...</div>
+                    ) : (
+                        <ul>
+                            {students.map((student) => (
+                                <li key={student._id}>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            onChange={(e) => handleStudentSelection(e, student)}
+                                            checked={selectedStudentIds.includes(student._id)}
+                                            disabled={anyLoading}
+                                        />
+                                        {student.name}
+                                    </label>
+                                </li>
+                            ))}
+                            {students.length === 0 && <li>No students found for this location</li>}
+                        </ul>
+                    )}
+                </div>
+            )}
+
+            <div className="new-student-section">
+                <h3>Add Student Not in List</h3>
+                <div className="new-student-input">
+                    <input
+                        type="text"
+                        value={newStudentName}
+                        onChange={handleNewStudentChange}
+                        placeholder="Enter new student name"
+                        disabled={anyLoading}
+                    />
+                    <button 
+                        onClick={addNewStudent} 
+                        disabled={anyLoading || !selectedLocation}
+                    >
+                        {addingStudent ? 'Adding...' : 'Add Student'}
+                    </button>
+                </div>
+                
+                {!selectedLocation && (
+                    <p className="warning-text">Please select a location first before adding a new student.</p>
+                )}
+
+                {addingStudent && (
+                    <div className="loading-text">Adding student to database...</div>
+                )}
+
+                {additionalStudents.length > 0 && (
+                    <div className="additional-students">
+                        <h4>Added Students:</h4>
+                        <ul>
+                            {additionalStudents.map((student) => (
+                                <li key={student._id}>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            onChange={(e) => handleStudentSelection(e, student)}
+                                            checked={selectedStudentIds.includes(student._id)}
+                                            disabled={anyLoading}
+                                        />
+                                        {student.name} (New)
+                                    </label>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+            </div>
+
+            <div className="volunteer-section">
+                <h3>Volunteers Present</h3>
+                <input
+                    type="text"
+                    value={volunteerName}
+                    onChange={handleVolunteerChange}
+                    placeholder="Enter volunteer name"
+                    disabled={anyLoading}
+                />
+                <button onClick={addVolunteer} disabled={anyLoading}>+</button>
+                <ul>
+                    {volunteers.map((volunteer, index) => (
+                        <li key={index}>{volunteer}</li>
+                    ))}
+                </ul>
+            </div>
+
+            <div className="action-buttons">
+                <button
+                    onClick={handleSubmit}
+                    className="submit-button"
+                    disabled={anyLoading}
+                >
+                    {submittingData ? 'Submitting...' : 'Submit Attendance'}
+                </button>
+
+                <button
+                    onClick={clearAllData}
+                    className="clear-button"
+                    disabled={anyLoading}
+                >
+                    Clear All Data
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export default Dropdowns;
