@@ -1,5 +1,9 @@
 {
+<<<<<<<< HEAD:sunday29/package.json
   "name": "sunday29",
+========
+  "name": "sunday-29",
+>>>>>>>> 9aa9479a77a841232e3f939ba7844a9293ee6925:shivaniworkingfolder/sunday 29/package.json
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -17,7 +21,7 @@
     "@eslint/js": "^9.29.0",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
-    "@vitejs/plugin-react-swc": "^3.10.2",
+    "@vitejs/plugin-react": "^4.5.2",
     "eslint": "^9.29.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",

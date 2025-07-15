@@ -1,0 +1,91 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+}
+
+.loginpage {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-page-card {
+    background-color: rgb(255, 255, 255);
+    width: 800px;
+    height: 400px;
+    display: flex;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* Left text section */
+.login-card-text {
+    flex: 1;
+    background-color: #f7f7f7;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-card-heading h1 {
+    margin: 0;
+    font-size: 32px;
+    color: #333;
+}
+
+.login-card-paragraph p {
+    margin-top: 16px;
+    font-size: 18px;
+    color: #555;
+}
+
+/* Right form section */
+.login-card-form {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+}
+
+.login-card-form input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.login-card-form button {
+    padding: 12px;
+    font-size: 16px;
+    background-color: #bd1c8f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.login-card-form button:hover {
+    background-color: #a20e77;
+}
+
+.login-card-form a {
+    color: #bd1c8f;
+    text-decoration: none;
+}
+
+.login-card-form a:hover {
+    text-decoration: underline;
+}
