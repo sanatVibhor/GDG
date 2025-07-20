@@ -22,17 +22,3 @@ app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
 
-<<<<<<< HEAD
-
-//express? -> it is a framework built on top of Node.js that simplifies building web servers
-
-//app ->server application
-
-//port- >300 server that runs on localhost:3000
-
-//netflix/movies -> shows all the movies presnt on netflix.
-//netflix/users -> active users
-//netflix/series -> sitcoms 
-//etc etc
-=======
->>>>>>> 01768d7ea7afe1beb14580916167eccb978880da

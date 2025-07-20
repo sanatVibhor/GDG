@@ -1,0 +1,56 @@
+.form-title {
+  text-align: center;
+  color: #065084;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.student-card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 320px;
+  border-radius: 15px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  font-family: Arial, sans-serif;
+}
+
+.form-label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.form-button {
+  background-color: #065084;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.form-button:hover {
+  background-color: #043f69;
+}
+
+
+table{
+    border-collapse: separate;
+    border-spacing: 0;
+    border:2px solid #ddd;
+    border-radius: 5px;
+    width:600px;
+}
