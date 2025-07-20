@@ -23,12 +23,12 @@ fs.readFile('GDG.txt','utf8', (err,data)=>{
 });
 
 
-// fs.rename('GDG.txt', 'GDG_renamed.txt', (err) => {
-//     if (err) {
-//         throw err;
-//     }
-//     console.log('File has been renamed.');
-// });
+fs.rename('GDG.txt', 'GDG_renamed.txt', (err) => {
+    if (err) {
+        throw err;
+    }
+    console.log('File has been renamed.');
+});
 
 // fs.unlink('GDG_renamed.txt', (err) => {
 //     if (err) throw err;
