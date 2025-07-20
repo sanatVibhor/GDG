@@ -1,0 +1,32 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.header {
+  position: fixed;          /* Makes it stay at top */
+  top: 0;
+  left: 0;
+  width: 100%;              /* Full width of screen */
+  z-index: 9999;            /* Stay above other elements */
+  background: #bb90e686;    /* Semi-transparent gray */
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  padding: 16px 32px;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #1b1a1a;              /* Optional: white text for contrast */
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav a:hover {
+  color: #7a4ef2;
+}
