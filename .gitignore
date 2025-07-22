@@ -1,0 +1,13 @@
+# Ignore environment config
+.env
+.env.local
+.env.*.local
+
+# Node modules & build
+node_modules/
+dist/
+build/
+
+# OS/system files
+.DS_Store
+Thumbs.db
